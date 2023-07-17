@@ -1,32 +1,29 @@
 import artists from "../assets/data/artists.json";
 
-export const createArtistNodes = (artists) => {
-    return artists.map((artist, i) => {
-        return {
-            id: `${artist.id}`,
-            data: { label: `${artist.name}` },
-            position: { x: 0, y: i * 100 },
-        };
-    });
+export const createFeaturedArtistsList = (artists, artistId, level) => {
+    const artist = artists.find((artist) => artist.id === artistId);
+    if (level === 0) return [artist];
+    const featuredArtists = artist.features.map((featuredArtist) => createFeaturedArtistsList(artists, featuredArtist, level - 1));
+    return [artist, ...featuredArtists.flat()];
 };
 
-export const createArtistEdges = (artists) => {
-    const edges = [];
-    artists.forEach((artist) => {
-        artist.features.forEach((feature) => {
-            // if (feature !== artist.id && )
-            edges.push({
-                id: `e${artist.id}to${feature}`,
-                source: `${artist.id}`,
-                target: `${feature}`,
-            });
-        });
-    });
-    return edges;
-};
+const featuredArtistsList = createFeaturedArtistsList(artists, 0, 2);
 
-export const initialNodes = createArtistNodes(artists);
-export const initialEdges = createArtistEdges(artists);
+export const initialNodes = featuredArtistsList.map((artist, index) => ({
+    id: artist.id.toString(),
+    data: { label: artist.name },
+    position: { x: 0, y: index * 100 },
+}));
+
+export const initialEdges = featuredArtistsList
+    .map((artist) =>
+        artist.features.map((feature) => ({
+            id: `e${artist.id}-${feature}`,
+            source: artist.id.toString(),
+            target: feature.toString(),
+        }))
+    )
+    .flat();
 
 // export const initialNodes = [
 //     {
