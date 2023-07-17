@@ -1,14 +1,11 @@
 import artists from "../assets/data/artists.json";
-import { artistsList } from "./CreateArtists";
-
-console.log(artistsList);
 
 export const createArtistNodes = (artists) => {
     return artists.map((artist, i) => {
         return {
             id: `${artist.id}`,
             data: { label: `${artist.name}` },
-            position: { x: i * 50, y: i * 50 },
+            position: { x: 0, y: i * 100 },
         };
     });
 };
@@ -17,7 +14,7 @@ export const createArtistEdges = (artists) => {
     const edges = [];
     artists.forEach((artist) => {
         artist.features.forEach((feature) => {
-            if (feature !== artist.id && )
+            // if (feature !== artist.id && )
             edges.push({
                 id: `e${artist.id}to${feature}`,
                 source: `${artist.id}`,
