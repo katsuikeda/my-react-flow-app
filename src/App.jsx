@@ -69,6 +69,11 @@ const LayoutFlow = () => {
                 }))
             )
             .flat();
+
+        window.requestAnimationFrame(() => {
+            fitView();
+        });
+
         setNodes(nodes);
         setEdges(edges);
     };
@@ -89,8 +94,9 @@ const LayoutFlow = () => {
                 </Sidebar>
             </div>
             <Panel position='top-right'>
-                <button onClick={() => onLayout("TB")}>vertical layout</button>
-                <button onClick={() => onLayout("LR")}>horizontal layout</button>
+                <button onClick={() => onLayout("TB")}>top bottom layout</button>
+                <button onClick={() => onLayout("LR")}>left right layout</button>
+                <button onClick={() => onLayout("BT")}>bottom top layout</button>
                 <button onClick={() => setToggled(!toggled)}>Choose Artist</button>
             </Panel>
             <Panel position='bottom-center'>
