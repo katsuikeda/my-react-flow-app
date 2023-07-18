@@ -92,6 +92,9 @@ const LayoutFlow = () => {
                     <Menu>{createMenuItem(artists)}</Menu>
                 </Sidebar>
             </div>
+            <Panel className='logo-panel' position='top-left' onClick={() => setToggled(!toggled)}>
+                Who's Featured Who?
+            </Panel>
             <Panel position='top-right'>
                 <button onClick={() => onLayout("TB")}>top bottom layout</button>
                 <button onClick={() => onLayout("LR")}>left right layout</button>

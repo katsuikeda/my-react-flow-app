@@ -49,6 +49,21 @@ button:hover {
   background-color: #fb7185;
 }
 
+/* Logo Panel */
+.logo-panel {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #fde047;
+  cursor: pointer;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+.logo-panel:hover {
+  color: white;
+}
+
 /* React Flow Edge */
 .react-flow__edge-path {
   stroke: #fde047;
