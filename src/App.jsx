@@ -45,7 +45,7 @@ const LayoutFlow = () => {
     );
 
     return (
-        <ReactFlow nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} fitView>
+        <ReactFlow style={{ background: "violet" }} nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} fitView>
             <Panel position='top-right'>
                 <button onClick={() => onLayout("TB")}>vertical layout</button>
                 <button onClick={() => onLayout("LR")}>horizontal layout</button>
