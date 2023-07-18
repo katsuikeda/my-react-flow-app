@@ -1,5 +1,5 @@
 import Dagre from "@dagrejs/dagre";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import ReactFlow, { ReactFlowProvider, Panel, useNodesState, useEdgesState, useReactFlow, Controls, MarkerType } from "reactflow";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 
@@ -8,9 +8,8 @@ import { initialNodes, initialEdges, createFeaturedArtistsList } from "./compone
 
 import "reactflow/dist/style.css";
 
-const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
-
 const getLayoutedElements = (nodes, edges, options) => {
+    const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
     g.setGraph({ rankdir: options.direction });
 
     edges.forEach((edge) => g.setEdge(edge.source, edge.target));
@@ -41,13 +40,13 @@ const LayoutFlow = () => {
 
             setNodes([...layouted.nodes]);
             setEdges([...layouted.edges]);
-
-            window.requestAnimationFrame(() => {
-                fitView();
-            });
         },
         [nodes, edges]
     );
+
+    useEffect(() => {
+        fitView();
+    }, [nodes, edges, fitView]);
 
     const updateNodesAndEdges = (artistId) => {
         const featuredArtistsList = createFeaturedArtistsList(artists, artistId, 2);
@@ -70,12 +69,12 @@ const LayoutFlow = () => {
             )
             .flat();
 
-        window.requestAnimationFrame(() => {
-            fitView();
-        });
-
         setNodes(nodes);
         setEdges(edges);
+
+        setToggled(false);
+
+        window.setTimeout(() => fitView(), 100);
     };
 
     const createMenuItem = (artists) => {
@@ -88,7 +87,7 @@ const LayoutFlow = () => {
 
     return (
         <ReactFlow nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} fitView>
-            <div style={{ display: "flex", height: "100vh", minHeight: "600px" }}>
+            <div>
                 <Sidebar style={{ zIndex: 100 }} onBackdropClick={() => setToggled(false)} toggled={toggled} breakPoint='all'>
                     <Menu>{createMenuItem(artists)}</Menu>
                 </Sidebar>

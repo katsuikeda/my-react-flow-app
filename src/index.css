@@ -70,6 +70,9 @@ button:hover {
   font-family: inherit;
   color: #333;
   transition: border-color 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .react-flow__node.selected {
